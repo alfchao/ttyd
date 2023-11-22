@@ -4,10 +4,12 @@ on:
   push:
     branches: main
     tags: ["*"]
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-22.04
+    if: ${{ github.event_name == 'workflow_dispatch' }}
     steps:
       - uses: actions/checkout@v3
       - name: Install packages

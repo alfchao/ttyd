@@ -1,0 +1,11 @@
+FROM alpine
+
+# COPY ./ttyd /usr/bin/ttyd
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories && \
+    apk add --no-cache bash tini openssh-client curl && \
+    curl https://github.com/tsl0922/ttyd/releases/latest/download/ttyd.x86_64 -o /usr/bin/ttyd && \
+    chmod +x /usr/bin/ttyd
+EXPOSE 7681
+
+ENTRYPOINT ["tini", "--"]
+CMD ["ttyd", "-W", "bash"]
